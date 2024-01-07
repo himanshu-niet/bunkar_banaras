@@ -156,4 +156,93 @@ export async function DELETE(request){
 }
 
 
+export async function PUT(request){
+    try {
+        const {
+          title,
+            desc,
+            price,
+            discount,
+            category,
+            subCategory,
+            color,
+            stock,
+            images
+        }=await request.json();
+
+        const url = new URL(request.nextUrl.href);
+        const id = url.searchParams.get('id');
+
+    
+        if (!title,
+            !desc,
+            !price,
+            !discount,
+            !category,
+            !subCategory,
+            !color,
+            !stock,
+            !id) {
+            return NextResponse.json({
+                success: false,
+                error:"Bad Request"
+            }, {
+                status: 400,
+            });
+        }
+    
+    
+        let imagesArr = [];
+        let imagesLinks=[];
+        if (typeof images === "string") {
+            imagesArr.push(images);
+        } else {
+            imagesArr = images;
+        }
+        if (imagesArr !== undefined) {
+            for (let i = 0; i < imagesArr.length; i++) {
+              const result = await cloudinary.v2.uploader.upload(imagesArr[i], {
+                folder: "products-test",
+              });
+              imagesLinks.push(result.secure_url);
+            }
+          }
+          
+          const updateProduct = await prisma.product.update({
+            where: {
+              id
+            },
+            data: {
+                title,
+                desc,
+                price:String(price),
+                discount:String(discount),
+                category,
+                subCategory,
+                color,
+                stock:String(stock),
+                ...(imagesLinks.length>0? { images: {
+                    deleteMany: {},
+                    create: imagesLinks.map((url) => ({ url })),
+                  }}: {})
+                }
+          })
+    
+        return NextResponse.json({
+            success: true,
+            data: updateProduct
+        }, {
+            status: 201,
+        });
+    
+       
+    } catch (error) {
+        console.log(error)
+    return NextResponse.json({
+        success: false,
+        error: error.message
+    }, {
+        status: 501,
+    });}}
+
 

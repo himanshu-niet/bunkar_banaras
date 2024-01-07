@@ -3,7 +3,6 @@ import Hero from './_components/Hero'
 import Categories from './_components/Categories'
 import HomeProduct from './_components/HomeProduct/HomeProduct'
 import ProductSlider from './_components/HomeProduct/ProductSlider'
-
 import Card  from './_components/Card'
 import Link from 'next/link'
 

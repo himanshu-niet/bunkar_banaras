@@ -1,3 +1,4 @@
+
 "use client"
 import React from "react";
 import {
@@ -21,28 +22,45 @@ import {
 import {VerticalDotsIcon} from "../common/VerticalDotsIcon";
 import {SearchIcon} from "../common/SearchIcon";
 import {ChevronDownIcon} from "../common/ChevronDownIcon";
-import {columns} from "./data";
 import {capitalize} from "../common/utils";
-import AddProduct from "./AddProduct";
-import Link from "next/link";
+
+import ShowAddress from "./ShowAddress";
+import ShowProducts from "./ShowProducts";
 import axios from "axios";
 
 
 
-const INITIAL_VISIBLE_COLUMNS = ["title", "price", "stock", "actions"];
+const columns = [
+  {name: "ID", uid: "id", sortable: true},
+  {name: "DATE", uid: "createdAt", sortable: true},
+  {name: "TOTAL", uid: "total"},
+  {name: "ADDRESS", uid: "address"},
+  {name: "PRODUCTS", uid: "orderItem"},
+  {name: "PROCEED", uid: "proceed"},
+];
+
+const INITIAL_VISIBLE_COLUMNS = [ "createdAt", "total", "address","orderItem","proceed"];
 
 export default function ProductTable({users}) {
 
 
-  const deleteProduct=(id)=>{
-    axios.delete(`/api/admin/product?id=${id}`).then((res)=>{
-      console.log(res)
-      alert("Product Deleted...")
-      document.location.href="/admin/products"
+  const haddleClick=(id)=>{
+    axios.put(`/api/admin/product/update?id=${id}`, {
+      "shippingStatus":"SHIPPED"
     })
-  }
+        .then(function (response) {
+         console.log(response)
+          alert("Order Update Succesfully")
+           location.href = "/admin/ongoingOrder";
 
-  
+
+        })
+        .catch(function (error) {
+          console.log(error)
+          alert("Order Not Updated")
+          console.log(error)
+        });
+  }
 
 
   const [filterValue, setFilterValue] = React.useState("");
@@ -50,7 +68,7 @@ export default function ProductTable({users}) {
   const [visibleColumns, setVisibleColumns] = React.useState(new Set(INITIAL_VISIBLE_COLUMNS));
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [sortDescriptor, setSortDescriptor] = React.useState({
-    column: "stock",
+    column: "createdAt",
     direction: "descending",
   });
   const [page, setPage] = React.useState(1);
@@ -68,7 +86,7 @@ export default function ProductTable({users}) {
 
     if (hasSearchFilter) {
       filteredUsers = filteredUsers.filter((user) =>
-        user.title.toLowerCase().includes(filterValue.toLowerCase()),
+        user.createdAt.toLowerCase().includes(filterValue.toLowerCase()),
       );
     }
    
@@ -101,37 +119,24 @@ export default function ProductTable({users}) {
 
     switch (columnKey) {
      
-      case "price":
+      case "address":
         return (
-          <div className="flex flex-col">
-            <p className="text-bold text-small capitalize">{cellValue}</p>
-          </div>
+          <ShowAddress address={user.address}/>
         );
-      case "stock":
+        case "orderItem":
+          return (
+          <ShowProducts product={user.orderItem}/>
+          );
+      case "proceed":
         return (
-          <Chip size="sm" variant="flat">
-            {cellValue}
-          </Chip>
+          <Button onClick={()=>haddleClick(user.id)} color="primary" endContent={<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+          <path strokeLinecap="round" strokeLinejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+        </svg>
+        }>
+        Proceed
+      </Button>
         );
-      case "actions":
-        return (
-          <div className="relative flex justify-end items-center gap-2">
-            <Dropdown>
-              <DropdownTrigger>
-                <Button isIconOnly size="sm" variant="light">
-                  <VerticalDotsIcon className="text-default-300" />
-                </Button>
-              </DropdownTrigger>
-              <DropdownMenu>
-                <DropdownItem><Link href={"/productdetail/"+user.id}>View</Link></DropdownItem>
-                <DropdownItem><Link href={"/admin/update/"+user.id}>Edit</Link></DropdownItem>
-
-                <DropdownItem onClick={()=>deleteProduct(user.id)}>Delete</DropdownItem>
-              </DropdownMenu>
-            </Dropdown>
-          </div>
-        );
-      default:
+     default:
         return cellValue;
     }
   }, []);
@@ -174,7 +179,7 @@ export default function ProductTable({users}) {
           <Input
             isClearable
             className="w-full sm:max-w-[44%]"
-            placeholder="Search by Title..."
+            placeholder="Search by Date"
             startContent={<SearchIcon />}
             value={filterValue}
             onClear={() => onClear()}
@@ -203,12 +208,12 @@ export default function ProductTable({users}) {
                 ))}
               </DropdownMenu>
             </Dropdown>
-            <AddProduct/>
+          
           </div>
         </div>
         <div className="flex justify-between items-center">
-          <span className="text-default-400 text-small">Total {users.length} Products</span>
-          <span className="text-default-800 text-large">Product List</span>
+          <span className="text-default-400 text-small">Total {users.length} Pending Order</span>
+          <span className="text-default-800 text-large">Pending Order List</span>
          
           <label className="flex items-center text-default-400 text-small">
             Rows per page:

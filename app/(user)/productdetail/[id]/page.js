@@ -261,53 +261,32 @@ const page = ({ params }) => {
                         </span>
                       </li>
                     </ul>
-
-
-
-
                   </div>
+                  <hr/>
+                  <p className='stext-102 my-2'>
+                  {data.desc}
+                  </p>
+                  <hr/>
+                  <details className='my-2'>
+                  <summary className='mtext-102 cl2 pointer'>Silk Mark Certification</summary>
+                  <p className='stext-102 '>
+                  {data.desc}
+                  </p>
+              </details>
+              <hr/>
+              <details className='my-2'>
+              <summary className='mtext-102 cl2 pointer'>Returns & Exchanges</summary>
+              <p className='stext-102 '>
+              {data.desc}
+              </p>
+          </details>
                 </div>
                 {/*  */}
 
               </div>
             </div>
           </div>
-          <div className="bor10 m-t-50 p-t-43 p-b-40">
-            {/* Tab01 */}
-            <div className="tab01">
-              {/* Nav tabs */}
-              <ul className="nav nav-tabs" role="tablist">
-                <li className="nav-item p-b-10">
-                  <a
-                    className="nav-link active"
-                    data-toggle="tab"
-                    href="#description"
-                    role="tab"
-                  >
-                    Description
-                  </a>
-                </li>
-               
-              </ul>
-              {/* Tab panes */}
-              <div className="tab-content p-t-43">
-                {/* - */}
-                <div
-                  className="tab-pane fade show active"
-                  id="description"
-                  role="tabpanel"
-                >
-                  <div className="how-pos2 p-lr-15-md">
-                    <p className="stext-102 cl6">
-                      {data.desc}
-                    </p>
-                  </div>
-                </div>
-                {/* - */}
-              
-              </div>
-            </div>
-          </div>
+         
         </div>
         <div className="bg6 flex-c-m flex-w size-302 m-t-73 p-tb-15">
           <span className="stext-107 cl6 p-lr-25">Categorie: {data.category}</span>

@@ -1,17 +1,86 @@
 "use client"
 import useCartStore from '@/utils/store/cart';
-
-import React from 'react'
+import { useFormik } from "formik";
+import axios from "axios";
+import React, { useEffect, useState } from 'react'
 import Tr from '../_components/Tr';
 import { calculateTotalCost } from '@/utils/fetuers';
+import Link from 'next/link';
 const page = () => {
 
+  const [userId,setUserId]=useState();
+  useEffect(()=>{
+setUserId(JSON.parse(localStorage.getItem("user")));
+  },[])
+
   const cartItems = useCartStore(state => state.cartItems);
+  const { clearCart } = useCartStore();
 
 
-  // if (cartItems && cartItems.length < 1) {
-  //   return <p>Loding..</p>
-  // }
+  const formik = useFormik({
+    initialValues: {
+      street: "",
+      city: "",
+      state: "",
+      postalCode: "",
+      country: "India",
+    },
+    onSubmit: (values) => {
+      
+
+      let products= cartItems.map((cartItem) => ({
+        productId: cartItem.id,
+        quantity: cartItem.quantity,
+        total: (cartItem.discountPrice).toFixed(2),
+        title:cartItem.title,
+        desc:cartItem.desc,
+        price:cartItem.price,
+        discount:cartItem.discount,
+        category:cartItem.category,
+        subCategory:cartItem.subCategory,
+        color:cartItem.color,
+        stock:cartItem.stock,
+        images:cartItem.images[0].url 
+      }))
+     
+      let total = products.reduce((acc, product) => {
+        return acc + parseFloat(product.total);
+      }, 0);
+
+      let data={
+        "userId": userId,
+        "total": total.toFixed(2),
+        "paymentInfo": {
+          "amount": total,
+          "mode": "COD"
+        },
+        "products":products,
+        "address": {
+          "street": values.street,
+          "city": values.city,
+          "state": values.state,
+          "postalCode": values.postalCode,
+          "country": values.country
+        }
+      }
+
+     
+
+        axios.post('/api/order', data)
+            .then(function (response) {
+                console.log(response)
+                alert("Order Created Succesfully")
+                clearCart()
+                location.href = "/order";
+            })
+            .catch(function (error) {
+                console.log(error)
+                alert("Order Not Created")
+                console.log(error)
+            });
+    },
+});
+
 
   return (
     <>
@@ -27,7 +96,7 @@ const page = () => {
       </div>
     </div>
     {/* Shoping Cart */}
-    <form className="bg0 p-t-75 p-b-85">
+    <div className="bg0 p-t-75 p-b-85">
       <div className="container">
         <div className="row">
           <div className="col-lg-10 col-xl-7 m-lr-auto m-b-50">
@@ -74,31 +143,94 @@ const page = () => {
             <div className="bor10 p-lr-40 p-t-30 p-b-40 m-l-63 m-r-40 m-lr-0-xl p-lr-15-sm">
               <h4 className="mtext-109 cl2 p-b-30">Cart Totals</h4>
               <div className="flex-w flex-t bor12 p-b-13">
-                <div className="size-208">
-                  <span className="stext-110 cl2">Total Items:</span>
-                </div>
-                <div className="size-209">
-                  <span className="mtext-110 cl2">{cartItems.length}</span>
-                </div>
+              <div className="size-208">
+                <span className="mtext-101 cl2">Total:</span>
               </div>
-             
-              <div className="flex-w flex-t p-t-27 p-b-33">
-                <div className="size-208">
-                  <span className="mtext-101 cl2">Total:</span>
-                </div>
-                <div className="size-209 p-t-1">
-                  <span className="mtext-110 cl2">₹{calculateTotalCost(cartItems).toFixed(2)}</span>
-                </div>
+              <div className="size-209 p-t-1">
+                <span className="mtext-110 cl2">₹{calculateTotalCost(cartItems).toFixed(2)}</span>
               </div>
+            </div>
               
+           {userId ?
+             <div>
+           <div className='pt-4 pb-2'> <span className="stext-110 cl2">Shipping Address:</span></div>
+              <form className='pb-8' onSubmit={formik.handleSubmit} method="POST">
+              {/* Grid */}
+              <div className="grid sm:grid-cols-12 gap-2">
+
+              
+            <div className="col-span-12 ">
+           
+              <input
+                id="af-account-email"
+                type="text"
+                className="py-2 px-3 pe-11 block w-full border border-gray-800 shadow-md text-md rounded-lg focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600"
+                placeholder="Enter Street"
+                name="street"
+                onChange={formik.handleChange}
+                value={formik.values.street}
+                required
+              />
+            </div>
+            <div className="col-span-12">
+              <input
+                id="af-account-email"
+                type="text"
+                className="py-2 px-3 pe-11 block w-full border border-gray-800 shadow-md text-md rounded-lg focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600"
+                placeholder="Enter City"
+                name="city"
+                onChange={formik.handleChange}
+                value={formik.values.city}
+                required
+              />
+            </div>
+            <div className="col-span-12">
+           
+              <input
+                id="af-account-email"
+                type="text"
+                className="py-2 px-3 pe-11 block w-full border border-gray-800 shadow-md text-md rounded-lg focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600"
+                placeholder="Enter State"
+                name="state"
+                onChange={formik.handleChange}
+                value={formik.values.state}
+                required
+              />
+            </div>
+
+            <div className="col-span-12">
+              <input
+                id="af-account-email"
+                type="text"
+                className="py-2 px-3 pe-11 block w-full border border-gray-800 shadow-md text-md rounded-lg focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600"
+                placeholder="Enter Pin Code"
+                name="postalCode"
+                onChange={formik.handleChange}
+                value={formik.values.postalCode}
+                required
+              />
+            </div>
+              </div>
+{cartItems.length<1?
               <button className="flex-c-m stext-101 cl0 size-116 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer">
-                Proceed to Checkout
-              </button>
+              Proceed to Checkout
+            </button>:
+            <button disabled className="flex-c-m stext-101 cl0 size-116 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer">
+            Proceed to Checkout
+          </button>}
+
+              </form>
+              
+              </div>: <Link href={"/login"} className="flex-c-m stext-101 cl0 size-116 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer">
+              Login To Proceed
+            </Link>
+            }
+
             </div>
           </div>
         </div>
       </div>
-    </form>
+    </div>
   </>
   
   )

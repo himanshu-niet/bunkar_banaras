@@ -1,3 +1,4 @@
+
 "use client"
 import React from "react";
 import {
@@ -18,39 +19,34 @@ import {
   Pagination,
 } from "@nextui-org/react";
 
-import {VerticalDotsIcon} from "../common/VerticalDotsIcon";
 import {SearchIcon} from "../common/SearchIcon";
 import {ChevronDownIcon} from "../common/ChevronDownIcon";
-import {columns} from "./data";
 import {capitalize} from "../common/utils";
-import AddProduct from "./AddProduct";
-import Link from "next/link";
-import axios from "axios";
+
+import ShowAddress from "./ShowAddress";
+import ShowProducts from "./ShowProducts";
 
 
 
-const INITIAL_VISIBLE_COLUMNS = ["title", "price", "stock", "actions"];
+const columns = [
+  {name: "ID", uid: "id", sortable: true},
+  {name: "DATE", uid: "createdAt", sortable: true},
+  {name: "TOTAL", uid: "total"},
+  {name: "ADDRESS", uid: "address"},
+  {name: "PRODUCTS", uid: "orderItem"},
+  {name: "PROCEED", uid: "shippingStatus"},
+];
 
-export default function ProductTable({users}) {
+const INITIAL_VISIBLE_COLUMNS = [ "createdAt", "total", "address","orderItem","shippingStatus"];
 
-
-  const deleteProduct=(id)=>{
-    axios.delete(`/api/admin/product?id=${id}`).then((res)=>{
-      console.log(res)
-      alert("Product Deleted...")
-      document.location.href="/admin/products"
-    })
-  }
-
-  
-
+export default function ProductHistory({users}) {
 
   const [filterValue, setFilterValue] = React.useState("");
   const [selectedKeys, setSelectedKeys] = React.useState(new Set([]));
   const [visibleColumns, setVisibleColumns] = React.useState(new Set(INITIAL_VISIBLE_COLUMNS));
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [sortDescriptor, setSortDescriptor] = React.useState({
-    column: "stock",
+    column: "createdAt",
     direction: "descending",
   });
   const [page, setPage] = React.useState(1);
@@ -68,7 +64,7 @@ export default function ProductTable({users}) {
 
     if (hasSearchFilter) {
       filteredUsers = filteredUsers.filter((user) =>
-        user.title.toLowerCase().includes(filterValue.toLowerCase()),
+        user.createdAt.toLowerCase().includes(filterValue.toLowerCase()),
       );
     }
    
@@ -101,37 +97,16 @@ export default function ProductTable({users}) {
 
     switch (columnKey) {
      
-      case "price":
+      case "address":
         return (
-          <div className="flex flex-col">
-            <p className="text-bold text-small capitalize">{cellValue}</p>
-          </div>
+          <ShowAddress address={user.address}/>
         );
-      case "stock":
-        return (
-          <Chip size="sm" variant="flat">
-            {cellValue}
-          </Chip>
-        );
-      case "actions":
-        return (
-          <div className="relative flex justify-end items-center gap-2">
-            <Dropdown>
-              <DropdownTrigger>
-                <Button isIconOnly size="sm" variant="light">
-                  <VerticalDotsIcon className="text-default-300" />
-                </Button>
-              </DropdownTrigger>
-              <DropdownMenu>
-                <DropdownItem><Link href={"/productdetail/"+user.id}>View</Link></DropdownItem>
-                <DropdownItem><Link href={"/admin/update/"+user.id}>Edit</Link></DropdownItem>
-
-                <DropdownItem onClick={()=>deleteProduct(user.id)}>Delete</DropdownItem>
-              </DropdownMenu>
-            </Dropdown>
-          </div>
-        );
-      default:
+        case "orderItem":
+          return (
+          <ShowProducts product={user.orderItem}/>
+          );
+    
+     default:
         return cellValue;
     }
   }, []);
@@ -174,7 +149,7 @@ export default function ProductTable({users}) {
           <Input
             isClearable
             className="w-full sm:max-w-[44%]"
-            placeholder="Search by Title..."
+            placeholder="Search by Date"
             startContent={<SearchIcon />}
             value={filterValue}
             onClear={() => onClear()}
@@ -203,12 +178,12 @@ export default function ProductTable({users}) {
                 ))}
               </DropdownMenu>
             </Dropdown>
-            <AddProduct/>
+          
           </div>
         </div>
         <div className="flex justify-between items-center">
-          <span className="text-default-400 text-small">Total {users.length} Products</span>
-          <span className="text-default-800 text-large">Product List</span>
+          <span className="text-default-400 text-small">Total {users.length} Order</span>
+          <span className="text-default-800 text-large">Order History List</span>
          
           <label className="flex items-center text-default-400 text-small">
             Rows per page:

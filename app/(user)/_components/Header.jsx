@@ -68,35 +68,35 @@ const Header = () => {
 
                 </li>
                 <li className={pathname == '/product' ? 'active-menu' : ''}>
-                  <Link href="product">Shop</Link>
+                  <Link href="/product">Shop</Link>
                 </li>
                 <li>
                   <a href="#">Category</a>
                   <ul className="sub-menu">
 <li><a href="#">Georgette Sarees</a>
   <ul className="sub-menu ml-2">
-    <li><Link href="product?subCategory=Silver Zari">Silver Zari</Link></li>
-    <li><Link href="product?subCategory=Water Zari">Water Zari</Link></li>
-    <li><Link href="product?subCategory=Meenakari Work">Meenakari Work</Link></li>
-    <li><Link href="product?subCategory=Antique Zari">Antique Zari</Link></li>
-    <li><Link href="product?subCategory=Gold Zari">Gold Zari</Link></li>
-    <li><Link href="product?subCategory=Chikankari">Chikankari</Link></li>
-    <li><Link href="product?subCategory=Bandhani">Bandhani</Link></li>
+    <li><Link href="/product?subCategory=Silver Zari">Silver Zari</Link></li>
+    <li><Link href="/product?subCategory=Water Zari">Water Zari</Link></li>
+    <li><Link href="/product?subCategory=Meenakari Work">Meenakari Work</Link></li>
+    <li><Link href="/product?subCategory=Antique Zari">Antique Zari</Link></li>
+    <li><Link href="/product?subCategory=Gold Zari">Gold Zari</Link></li>
+    <li><Link href="/product?subCategory=Chikankari">Chikankari</Link></li>
+    <li><Link href="/product?subCategory=Bandhani">Bandhani</Link></li>
   </ul></li>
 
 <li><a href="#">Katan Silk Sarees</a>
   <ul className="sub-menu ml-2">
-    <li><Link href="product?subCategory=Jaal Work">Jaal Work</Link></li>
-    <li><Link href="product?subCategory=Kadua Motifs">Kadua Motifs</Link></li>
-    <li><Link href="product?subCategory=Kadua Jangla">Kadua Jangla</Link></li>
+    <li><Link href="/product?subCategory=Jaal Work">Jaal Work</Link></li>
+    <li><Link href="/product?subCategory=Kadua Motifs">Kadua Motifs</Link></li>
+    <li><Link href="/product?subCategory=Kadua Jangla">Kadua Jangla</Link></li>
   </ul></li>
-<li><Link href="product?category=Tussar">Tussar Silk Sarees</Link>
+<li><Link href="/product?category=Tussar">Tussar Silk Sarees</Link>
 </li>
-<li><Link href="product?subCategory=Kora">Kora Silk Sarees</Link></li>
-<li><Link href="product?subCategory=Organza">Organza Sarees</Link></li>
-<li><Link href="product?subCategory=Chiffon">Chiffon Sarees</Link></li>
-<li><Link href="product?subCategory=Dupion">Dupion Silk Saree</Link></li>
-<li><Link href="product?subCategory=Tissue">Tissue Sarees</Link></li>
+<li><Link href="/product?subCategory=Kora">Kora Silk Sarees</Link></li>
+<li><Link href="/product?subCategory=Organza">Organza Sarees</Link></li>
+<li><Link href="/product?subCategory=Chiffon">Chiffon Sarees</Link></li>
+<li><Link href="/product?subCategory=Dupion">Dupion Silk Saree</Link></li>
+<li><Link href="/product?subCategory=Tissue">Tissue Sarees</Link></li>
 
                   </ul>
                 </li>
@@ -112,7 +112,7 @@ const Header = () => {
             {/* Icon header */}
             <div className="wrap-icon-header flex-w flex-r-m">
               <NavSearch />
-              <Link href="shopingcart">
+              <Link href="/shopingcart">
                 <div
                   className="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 icon-header-noti js-show-cart"
                   data-notify={cartItems.length}
@@ -138,7 +138,7 @@ const Header = () => {
 
           <NavSearch />
 
-          <Link href="shopingcart">
+          <Link href="/shopingcart">
           <div
             className="icon-header-item cl2 hov-cl1 trans-04 p-r-11 p-l-10 icon-header-noti js-show-cart"
             data-notify={cartItems.length}
@@ -167,10 +167,10 @@ const Header = () => {
           </li>
           <li>
             <div className="right-top-bar flex-w h-full">
-              <Link href="faqs" className="flex-c-m p-lr-10 trans-04">
+              <Link href="/faqs" className="flex-c-m p-lr-10 trans-04">
                 Help &amp; FAQs
               </Link>
-              <Link href="#" className="flex-c-m p-lr-10 trans-04">
+              <Link href="/admin-login" className="flex-c-m p-lr-10 trans-04">
                 My Account
               </Link>
 
@@ -184,7 +184,7 @@ const Header = () => {
 
           </li>
           <li>
-            <Link href="product">Shop</Link>
+            <Link href="/product">Shop</Link>
           </li>
           <li>
           <Dropdown>
@@ -192,19 +192,19 @@ const Header = () => {
             <a>Category</a>
           </DropdownTrigger>
           <DropdownMenu aria-label="Static Actions">
-            <DropdownItem key="1"><Link className='cl1' href="product?category=Georgette">Georgette Sarees</Link></DropdownItem>
-            <DropdownItem key="2"><Link className='cl1' href="product?category=Katan">Katan Silk Sarees</Link></DropdownItem>
-            <DropdownItem key="3"><Link className='cl1' href="product?category=Tussar">Tussar Silk Sarees</Link></DropdownItem>
+            <DropdownItem key="1"><Link className='cl1' href="/product?category=Georgette">Georgette Sarees</Link></DropdownItem>
+            <DropdownItem key="2"><Link className='cl1' href="/product?category=Katan">Katan Silk Sarees</Link></DropdownItem>
+            <DropdownItem key="3"><Link className='cl1' href="/product?category=Tussar">Tussar Silk Sarees</Link></DropdownItem>
 
-            <DropdownItem key="4"><Link className='cl1' href="product?subCategory=Kora">Kora Silk Sarees</Link>
+            <DropdownItem key="4"><Link className='cl1' href="/product?subCategory=Kora">Kora Silk Sarees</Link>
             </DropdownItem>
-            <DropdownItem key="5"><Link className='cl1' href="product?subCategory=Organza">Organza Sarees</Link>
+            <DropdownItem key="5"><Link className='cl1' href="/product?subCategory=Organza">Organza Sarees</Link>
             </DropdownItem>
-            <DropdownItem key="6"><Link className='cl1' href="product?subCategory=Chiffon">Chiffon Sarees</Link>
+            <DropdownItem key="6"><Link className='cl1' href="/product?subCategory=Chiffon">Chiffon Sarees</Link>
             </DropdownItem>
-            <DropdownItem key="7"><Link className='cl1' href="product?subCategory=Dupion">Dupion Silk Saree</Link>
+            <DropdownItem key="7"><Link className='cl1' href="/product?subCategory=Dupion">Dupion Silk Saree</Link>
             </DropdownItem>
-            <DropdownItem key="8"><Link className='cl1' href="product?subCategory=Tissue">Tissue Sarees</Link>
+            <DropdownItem key="8"><Link className='cl1' href="/product?subCategory=Tissue">Tissue Sarees</Link>
             </DropdownItem>
           </DropdownMenu>
         </Dropdown>

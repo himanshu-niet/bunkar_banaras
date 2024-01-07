@@ -1,3 +1,4 @@
+
 "use client"
 import React from "react";
 import {
@@ -18,30 +19,55 @@ import {
   Pagination,
 } from "@nextui-org/react";
 
-import {VerticalDotsIcon} from "../common/VerticalDotsIcon";
 import {SearchIcon} from "../common/SearchIcon";
 import {ChevronDownIcon} from "../common/ChevronDownIcon";
-import {columns, users, statusOptions} from "./data";
 import {capitalize} from "../common/utils";
 
+import ShowAddress from "./ShowAddress";
+import ShowProducts from "./ShowProducts";
+import axios from "axios";
 
-const statusColorMap = {
-  active: "success",
-  paused: "danger",
-  vacation: "warning",
-};
 
-const INITIAL_VISIBLE_COLUMNS = ["name", "role", "status", "actions"];
 
-export default function OrderOngoingTable() {
+const columns = [
+  {name: "ID", uid: "id", sortable: true},
+  {name: "DATE", uid: "createdAt", sortable: true},
+  {name: "TOTAL", uid: "total"},
+  {name: "ADDRESS", uid: "address"},
+  {name: "PRODUCTS", uid: "orderItem"},
+  {name: "PROCEED", uid: "proceed"},
+];
+
+const INITIAL_VISIBLE_COLUMNS = [ "createdAt", "total", "address","orderItem","proceed"];
+
+export default function ProductOngoing({users}) {
+
+
+  const haddleClick=(id)=>{
+    axios.put(`/api/admin/product/update?id=${id}`, {
+      "shippingStatus":"DELIVERED"
+    })
+        .then(function (response) {
+         console.log(response)
+          alert("Order Update Succesfully")
+           location.href = "/admin/orderHistory";
+
+
+        })
+        .catch(function (error) {
+          console.log(error)
+          alert("Order Not Updated")
+          console.log(error)
+        });
+  }
+
   const [filterValue, setFilterValue] = React.useState("");
   const [selectedKeys, setSelectedKeys] = React.useState(new Set([]));
   const [visibleColumns, setVisibleColumns] = React.useState(new Set(INITIAL_VISIBLE_COLUMNS));
-  const [statusFilter, setStatusFilter] = React.useState("all");
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [sortDescriptor, setSortDescriptor] = React.useState({
-    column: "age",
-    direction: "ascending",
+    column: "createdAt",
+    direction: "descending",
   });
   const [page, setPage] = React.useState(1);
 
@@ -58,17 +84,13 @@ export default function OrderOngoingTable() {
 
     if (hasSearchFilter) {
       filteredUsers = filteredUsers.filter((user) =>
-        user.name.toLowerCase().includes(filterValue.toLowerCase()),
+        user.createdAt.toLowerCase().includes(filterValue.toLowerCase()),
       );
     }
-    if (statusFilter !== "all" && Array.from(statusFilter).length !== statusOptions.length) {
-      filteredUsers = filteredUsers.filter((user) =>
-        Array.from(statusFilter).includes(user.status),
-      );
-    }
+   
 
     return filteredUsers;
-  }, [users, filterValue, statusFilter]);
+  }, [users, filterValue]);
 
   const pages = Math.ceil(filteredItems.length / rowsPerPage);
 
@@ -91,49 +113,28 @@ export default function OrderOngoingTable() {
 
   const renderCell = React.useCallback((user, columnKey) => {
     const cellValue = user[columnKey];
+   
 
     switch (columnKey) {
-      case "name":
+     
+      case "address":
         return (
-          <User
-            avatarProps={{radius: "lg", src: user.avatar}}
-            description={user.email}
-            name={cellValue}
-          >
-            {user.email}
-          </User>
+          <ShowAddress address={user.address}/>
         );
-      case "role":
+        case "orderItem":
+          return (
+          <ShowProducts product={user.orderItem}/>
+          );
+      case "proceed":
         return (
-          <div className="flex flex-col">
-            <p className="text-bold text-small capitalize">{cellValue}</p>
-            <p className="text-bold text-tiny capitalize text-default-400">{user.team}</p>
-          </div>
+          <Button onClick={()=>haddleClick(user.id)} color="primary" endContent={<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+          <path strokeLinecap="round" strokeLinejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+        </svg>
+        }>
+        Proceed
+      </Button>
         );
-      case "status":
-        return (
-          <Chip className="capitalize" color={statusColorMap[user.status]} size="sm" variant="flat">
-            {cellValue}
-          </Chip>
-        );
-      case "actions":
-        return (
-          <div className="relative flex justify-end items-center gap-2">
-            <Dropdown>
-              <DropdownTrigger>
-                <Button isIconOnly size="sm" variant="light">
-                  <VerticalDotsIcon className="text-default-300" />
-                </Button>
-              </DropdownTrigger>
-              <DropdownMenu>
-                <DropdownItem>View</DropdownItem>
-                <DropdownItem>Edit</DropdownItem>
-                <DropdownItem>Delete</DropdownItem>
-              </DropdownMenu>
-            </Dropdown>
-          </div>
-        );
-      default:
+     default:
         return cellValue;
     }
   }, []);
@@ -176,34 +177,14 @@ export default function OrderOngoingTable() {
           <Input
             isClearable
             className="w-full sm:max-w-[44%]"
-            placeholder="Search by name..."
+            placeholder="Search by Date"
             startContent={<SearchIcon />}
             value={filterValue}
             onClear={() => onClear()}
             onValueChange={onSearchChange}
           />
           <div className="flex gap-3">
-            <Dropdown>
-              <DropdownTrigger className="hidden sm:flex">
-                <Button endContent={<ChevronDownIcon className="text-small" />} variant="flat">
-                  Status
-                </Button>
-              </DropdownTrigger>
-              <DropdownMenu
-                disallowEmptySelection
-                aria-label="Table Columns"
-                closeOnSelect={false}
-                selectedKeys={statusFilter}
-                selectionMode="multiple"
-                onSelectionChange={setStatusFilter}
-              >
-                {statusOptions.map((status) => (
-                  <DropdownItem key={status.uid} className="capitalize">
-                    {capitalize(status.name)}
-                  </DropdownItem>
-                ))}
-              </DropdownMenu>
-            </Dropdown>
+           
             <Dropdown>
               <DropdownTrigger className="hidden sm:flex">
                 <Button endContent={<ChevronDownIcon className="text-small" />} variant="flat">
@@ -229,8 +210,8 @@ export default function OrderOngoingTable() {
           </div>
         </div>
         <div className="flex justify-between items-center">
-          <span className="text-default-400 text-small">Total {users.length} users</span>
-          <span className="text-default-800 text-large">Order Pending List</span>
+          <span className="text-default-400 text-small">Total {users.length} Ongoing Order</span>
+          <span className="text-default-800 text-large">Ongoing Order List</span>
          
           <label className="flex items-center text-default-400 text-small">
             Rows per page:
@@ -249,7 +230,7 @@ export default function OrderOngoingTable() {
     );
   }, [
     filterValue,
-    statusFilter,
+
     visibleColumns,
     onRowsPerPageChange,
     users.length,
@@ -314,7 +295,7 @@ export default function OrderOngoingTable() {
           </TableColumn>
         )}
       </TableHeader>
-      <TableBody emptyContent={"No users found"} items={sortedItems}>
+      <TableBody emptyContent={"No Product found"} items={sortedItems}>
         {(item) => (
           <TableRow key={item.id}>
             {(columnKey) => <TableCell>{renderCell(item, columnKey)}</TableCell>}

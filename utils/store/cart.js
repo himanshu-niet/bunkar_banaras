@@ -72,6 +72,10 @@ const useCartStore = create(
             set({ cartItems: updatedCartItems })
           }
         }
+      },
+      clearCart:() => {
+        
+            set({ cartItems: [] })
       }
     }),
     {

@@ -142,6 +142,13 @@ const Footer = () => {
 
     <BackToTop/>
 
+    <div className="h-32 w-32">
+  <div className="fixed bottom-28 right-8  z-10  pointer">
+ <a href={""} className='flex'> <h4 className=' font-medium mtext-102  bg-white py-1 px-2 h-8 shadow-lg mt-3 mr-1 rounded text-[#202020]' >Chat with us</h4>
+ <img className='h-14 w-14' src='/whatsapp.png'/></a>
+  </div>
+</div>
+
 
     {/* Modal1 */}
     <div className="wrap-modal1 js-modal1 p-t-60 p-b-20">

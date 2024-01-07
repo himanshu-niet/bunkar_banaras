@@ -1,28 +1,34 @@
 "use client"
 import axios from 'axios';
 import Link from 'next/link'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 const page = () => {
+
+  useEffect(()=>{
+    if(localStorage.getItem('user')){
+      location.href="/orders"
+    }
+  },[])
 
 const [email,setEmail]=useState("");
 const [password,setPass]=useState("");
 
 
 const handdleSubmit=()=>{
-  
-
   axios.post("api/signin",{email,password}).then((res)=>{
+    console.log(res)
    if( res.data.success){
-    location.href="/product"
+    localStorage.setItem("user", JSON.stringify(res.data.data.id));
+    location.href="/shopingcart"
    }
    else{
     alert("Email Password Not Match")
    }
   }).catch((err)=>{
+    console.log(err)
     alert("Email Not Found")
   })
-
 }
 
 

@@ -11,4 +11,14 @@ const columns = [
 ];
 
 
-export {columns};
+const columnsOrder = [
+  {name: "ID", uid: "id", sortable: true},
+  {name: "DATE", uid: "date", sortable: true},
+  {name: "TOTAL", uid: "total"},
+  {name: "ADDRESS", uid: "address"},
+  {name: "PROCEED", uid: "proceed"},
+  {name: "ACTIONS", uid: "actions"}
+];
+
+
+export {columns,columnsOrder};

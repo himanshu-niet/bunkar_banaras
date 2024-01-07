@@ -7,8 +7,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
-
 model User {
   id        String   @id @default(uuid())
   email     String   @unique
@@ -20,24 +18,20 @@ model User {
   updatedAt DateTime @updatedAt
 }
 
-
 model Product {
-  id String @id @default(uuid())
-  title String @unique
-  desc String
-  price String
-  discount String
-  category String
+  id          String       @id @default(uuid())
+  title       String       @unique
+  desc        String
+  price       String
+  discount    String
+  category    String
   subCategory String
-  color String
-  stock String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now())
-  images  ProductUrl[]
+  color       String
+  stock       String
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @default(now())
+  images      ProductUrl[]
 }
-
-
-
 
 model ProductUrl {
   url       String
@@ -45,4 +39,59 @@ model ProductUrl {
   product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
   @@id([url, productId])
   @@index([productId])
+}
+
+model Order {
+  id             String      @id @default(uuid())
+  address        Address?    @relation(fields: [addressId], references: [id])
+  userId         String
+  total          String
+  returnInfo     ReturnInfo? @relation(fields: [returnInfoId], references: [id])
+  orderItem      OrderItem[]
+  shippingStatus String
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime    @default(now())
+  addressId      String?
+  returnInfoId   String?
+}
+
+model OrderItem {
+  id        String   @id @default(uuid())
+  quantity  Int
+  total     String
+  productId String
+  title       String       
+  desc        String
+  price       String
+  discount    String
+  category    String
+  subCategory String
+  color       String
+  stock       String
+  images      String
+  orderId   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+  order     Order    @relation(fields: [orderId], references: [id])
+}
+
+model Address {
+  id         String  @id @default(uuid())
+  street     String
+  city       String
+  state      String
+  postalCode String
+  country    String
+  order      Order[]
+}
+
+model ReturnInfo {
+  id                String    @id @default(uuid())
+  reason            String // Reason for return
+  returnRequested   Boolean // Indicates if a return has been requested
+  returnApproved    Boolean? // Indicates if the return has been approved
+  returnReason      String? // Additional details about the return approval or rejection
+  returnProcessed   Boolean? // Indicates if the return has been processed
+  returnProcessedAt DateTime?
+  order             Order[]
 }
