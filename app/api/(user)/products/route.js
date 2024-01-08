@@ -45,7 +45,7 @@ export async function GET(request) {
         }
 
 
-        if (category) {
+        if (category && (category.toLowerCase()!='all')) {
             where.category = {
                 contains: category
             };

@@ -42,8 +42,8 @@ const Header = () => {
               Free National shipping for standard order over ₹10000
             </div>
             <div className="right-top-bar flex-w h-full">
-              <Link href="/faqs" className="flex-c-m trans-04 p-lr-25">
-                Help &amp; FAQs
+              <Link href="/order" className="flex-c-m trans-04 p-lr-25">
+                My Account
               </Link>
               <Link href="/admin-login" className="flex-c-m trans-04 p-lr-25">
                 Admin

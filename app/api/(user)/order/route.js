@@ -69,23 +69,30 @@ try{
       }}
 
 
-export async function GET(request){
+      export async function GET(request){
         try {
-            const order = await prisma.order.findMany({
-                include: {
-                  address:true,
-                  returnInfo:true,
-                  orderItem:true
-                  }
-              })
-            return NextResponse.json({
-                success:true,
-                data:order
-            },{
-                status:200
-            })
-            
+          const url = new URL(request.nextUrl.href);
+          const userId = url.searchParams.get('id');
+    
+          const order = await prisma.order.findMany({
+              where: {
+                userId: userId,
+              },
+              include: {
+                address:true,
+                returnInfo:true,
+                orderItem:true
+                }
+            });
+
+                return NextResponse.json({
+                    success:true,
+                    data:order
+                },{
+                    status:200
+                })
         } catch (error) {
+          console.log(error)
             return NextResponse.json({
                 success: false,
                 error: error.message

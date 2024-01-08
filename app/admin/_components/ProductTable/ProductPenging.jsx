@@ -27,6 +27,7 @@ import {capitalize} from "../common/utils";
 import ShowAddress from "./ShowAddress";
 import ShowProducts from "./ShowProducts";
 import axios from "axios";
+import ShowUser from "./ShowUser";
 
 
 
@@ -34,12 +35,15 @@ const columns = [
   {name: "ID", uid: "id", sortable: true},
   {name: "DATE", uid: "createdAt", sortable: true},
   {name: "TOTAL", uid: "total"},
+  {name: "STATUS", uid: "shippingStatus"},
+
   {name: "ADDRESS", uid: "address"},
+  {name: "USER", uid: "userId"},
   {name: "PRODUCTS", uid: "orderItem"},
   {name: "PROCEED", uid: "proceed"},
 ];
 
-const INITIAL_VISIBLE_COLUMNS = [ "createdAt", "total", "address","orderItem","proceed"];
+const INITIAL_VISIBLE_COLUMNS = [ "id","createdAt", "total", "address","userId","orderItem","proceed","shippingStatus"];
 
 export default function ProductTable({users}) {
 
@@ -119,6 +123,10 @@ export default function ProductTable({users}) {
 
     switch (columnKey) {
      
+      case "userId":
+        return (
+          <ShowUser userId={user.userId}/>
+        );
       case "address":
         return (
           <ShowAddress address={user.address}/>

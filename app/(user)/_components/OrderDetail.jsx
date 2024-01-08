@@ -1,6 +1,6 @@
 
 "use client"
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Table,
   TableHeader,
@@ -19,14 +19,15 @@ import {
   Pagination,
 } from "@nextui-org/react";
 
-import {SearchIcon} from "../common/SearchIcon";
-import {ChevronDownIcon} from "../common/ChevronDownIcon";
-import {capitalize} from "../common/utils";
+import {SearchIcon} from "@/app/admin/_components/common/SearchIcon";
+import {ChevronDownIcon} from "@/app/admin/_components/common/ChevronDownIcon";
+import {capitalize} from "@/app/admin/_components/common/utils";
 
-import ShowAddress from "./ShowAddress";
-import ShowProducts from "./ShowProducts";
+import ShowAddress from "@/app/admin/_components/ProductTable/ShowAddress";
+import ShowProducts from "@/app/admin/_components/ProductTable/ShowProducts";
+import ShowUser from "@/app/admin/_components/ProductTable/ShowUser";
 import axios from "axios";
-import ShowUser from "./ShowUser";
+import { PlusIcon } from "@/app/admin/_components/common/PlusIcon";
 
 
 const columns = [
@@ -35,32 +36,19 @@ const columns = [
   {name: "TOTAL", uid: "total"},
   {name: "STATUS", uid: "shippingStatus"},
   {name: "ADDRESS", uid: "address"},
-  {name: "USER", uid: "userId"},
   {name: "PRODUCTS", uid: "orderItem"},
-  {name: "PROCEED", uid: "proceed"},
+  
 ];
 
-const INITIAL_VISIBLE_COLUMNS = [ "id","createdAt", "total", "address","userId","orderItem","proceed","shippingStatus"];
+const INITIAL_VISIBLE_COLUMNS = ["createdAt", "total", "address","orderItem","shippingStatus"];
 
-export default function ProductOngoing({users}) {
+export default function OrderDetail({users}) {
 
 
-  const haddleClick=(id)=>{
-    axios.put(`/api/admin/product/update?id=${id}`, {
-      "shippingStatus":"DELIVERED"
-    })
-        .then(function (response) {
-         console.log(response)
-          alert("Order Update Succesfully")
-           location.href = "/admin/orderHistory";
-        })
-        .catch(function (error) {
-          console.log(error)
-          alert("Order Not Updated")
-          console.log(error)
-        });
+  const handleSignOut = ()=>{
+    localStorage.removeItem("user");
+    location.href = "/";
   }
-
   const [filterValue, setFilterValue] = React.useState("");
   const [selectedKeys, setSelectedKeys] = React.useState(new Set([]));
   const [visibleColumns, setVisibleColumns] = React.useState(new Set(INITIAL_VISIBLE_COLUMNS));
@@ -117,28 +105,20 @@ export default function ProductOngoing({users}) {
 
     switch (columnKey) {
      
-      case "address":
-        return (
-          <ShowAddress address={user.address}/>
-        );
       case "userId":
         return (
           <ShowUser userId={user.userId}/>
         );
-
+      case "address":
+        return (
+          <ShowAddress address={user.address}/>
+        );
         case "orderItem":
           return (
           <ShowProducts product={user.orderItem}/>
           );
-      case "proceed":
-        return (
-          <Button onClick={()=>haddleClick(user.id)} color="primary" endContent={<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-          <path strokeLinecap="round" strokeLinejoin="round" d="m4.5 12.75 6 6 9-13.5" />
-        </svg>
-        }>
-        Proceed
-      </Button>
-        );
+          
+      
      default:
         return cellValue;
     }
@@ -177,7 +157,7 @@ export default function ProductOngoing({users}) {
 
   const topContent = React.useMemo(() => {
     return (
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-4 mt-14">
         <div className="flex justify-between gap-3 items-end">
           <Input
             isClearable
@@ -211,12 +191,17 @@ export default function ProductOngoing({users}) {
                 ))}
               </DropdownMenu>
             </Dropdown>
+            <Button onPress={handleSignOut} color="primary" endContent={<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M5.636 5.636a9 9 0 1 0 12.728 0M12 3v9" />
+          </svg>} >
+        Logout
+      </Button>
           
           </div>
         </div>
         <div className="flex justify-between items-center">
-          <span className="text-default-400 text-small">Total {users.length} Ongoing Order</span>
-          <span className="text-default-800 text-large">Ongoing Order List</span>
+          <span className="text-default-400 text-small">Total {users.length} Order</span>
+          <span className="text-default-800 text-large"> Order List</span>
          
           <label className="flex items-center text-default-400 text-small">
             Rows per page:

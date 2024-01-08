@@ -25,6 +25,7 @@ import {capitalize} from "../common/utils";
 
 import ShowAddress from "./ShowAddress";
 import ShowProducts from "./ShowProducts";
+import ShowUser from "./ShowUser";
 
 
 
@@ -32,12 +33,13 @@ const columns = [
   {name: "ID", uid: "id", sortable: true},
   {name: "DATE", uid: "createdAt", sortable: true},
   {name: "TOTAL", uid: "total"},
+  {name: "STATUS", uid: "shippingStatus"},
   {name: "ADDRESS", uid: "address"},
+  {name: "USER", uid: "userId"},
   {name: "PRODUCTS", uid: "orderItem"},
-  {name: "PROCEED", uid: "shippingStatus"},
 ];
 
-const INITIAL_VISIBLE_COLUMNS = [ "createdAt", "total", "address","orderItem","shippingStatus"];
+const INITIAL_VISIBLE_COLUMNS = [ "id","createdAt", "total", "address","userId","orderItem","shippingStatus"];
 
 export default function ProductHistory({users}) {
 
@@ -100,6 +102,10 @@ export default function ProductHistory({users}) {
       case "address":
         return (
           <ShowAddress address={user.address}/>
+        );
+      case "userId":
+        return (
+          <ShowUser userId={user.userId}/>
         );
         case "orderItem":
           return (

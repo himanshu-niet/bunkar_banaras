@@ -7,7 +7,7 @@ const page = () => {
 
   useEffect(()=>{
     if(localStorage.getItem('user')){
-      location.href="/orders"
+      location.href="/order"
     }
   },[])
 

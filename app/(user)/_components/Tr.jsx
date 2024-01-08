@@ -13,7 +13,7 @@ const Tr = ({item}) => {
       </div>
     </td>
     <td className="column-2">{item.title}</td>
-    <td className="column-3">₹{item.discountPrice}</td>
+    <td className="column-3">₹{(item.discountPrice).toFixed()}</td>
     <td className="column-4">
       <div className="wrap-num-product flex-w m-l-auto m-r-0">
         <div onClick={()=>decreaseQuantity(item.id)} className="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m">

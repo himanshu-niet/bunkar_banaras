@@ -47,7 +47,7 @@ const page = () => {
             </span>
             <div className="size-212 p-t-2">
               <span className="mtext-110 cl2">Address</span>
-              <p className="stext-115 cl6 size-213 p-t-18">
+              <p className="stext-115 cl1 size-213 p-t-18">
            Shop No. 947 Walidpur Market Road, Mau, Mohinuddinpur, Uttar Pradesh 276405
               </p>
             </div>

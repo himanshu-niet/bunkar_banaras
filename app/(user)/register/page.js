@@ -2,11 +2,17 @@
 import axios from 'axios';
 import { useFormik } from 'formik';
 import Link from 'next/link'
-import React from 'react'
+import React, { useEffect } from 'react'
 
 const page = () => {
   
+  useEffect(()=>{
+    if(localStorage.getItem('user')){
+      location.href="/order"
+    }
+  },[])
 
+  
   const formik = useFormik({
     initialValues: {
       email: "",

@@ -9,11 +9,13 @@ import Link from 'next/link';
 const page = () => {
 
   const [userId,setUserId]=useState();
+
   useEffect(()=>{
 setUserId(JSON.parse(localStorage.getItem("user")));
   },[])
 
   const cartItems = useCartStore(state => state.cartItems);
+
   const { clearCart } = useCartStore();
 
 
@@ -25,9 +27,15 @@ setUserId(JSON.parse(localStorage.getItem("user")));
       postalCode: "",
       country: "India",
     },
-    onSubmit: (values) => {
-      
+    onSubmit: (values,{resetForm}) => {
 
+      if(!cartItems.length>0){
+        alert("Cart is Empty..")
+        resetForm();
+        return
+      }
+
+      
       let products= cartItems.map((cartItem) => ({
         productId: cartItem.id,
         quantity: cartItem.quantity,
@@ -68,15 +76,12 @@ setUserId(JSON.parse(localStorage.getItem("user")));
 
         axios.post('/api/order', data)
             .then(function (response) {
-                console.log(response)
                 alert("Order Created Succesfully")
                 clearCart()
                 location.href = "/order";
             })
             .catch(function (error) {
-                console.log(error)
                 alert("Order Not Created")
-                console.log(error)
             });
     },
 });
@@ -119,7 +124,6 @@ setUserId(JSON.parse(localStorage.getItem("user")));
                     {cartItems.map((item,idx)=>{
                       return <Tr key={idx} item={item}/>
                     })}
-
                   </tbody>
                 </table>
               </div>
@@ -211,13 +215,11 @@ setUserId(JSON.parse(localStorage.getItem("user")));
               />
             </div>
               </div>
-{cartItems.length<1?
-              <button className="flex-c-m stext-101 cl0 size-116 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer">
+              <button type="submit" className="mt-4 flex-c-m stext-101 cl0 size-116 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer">
               Proceed to Checkout
-            </button>:
-            <button disabled className="flex-c-m stext-101 cl0 size-116 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer">
-            Proceed to Checkout
-          </button>}
+             </button>
+
+            
 
               </form>
               
