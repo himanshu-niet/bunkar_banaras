@@ -2,11 +2,11 @@
   "name": "shree-next",
   "version": "0.1.0",
   "private": true,
+  
   "scripts": {
-    "dev": "next dev --turbo",
-    "build": "prisma generate && next build",
-    "start": "PORT=5000 next start",
-    "lint": "next lint",
+    "dev": "node server.js",
+    "build": "next build",
+    "start": "NODE_ENV=production node server.js",
     "postinstall": "prisma generate"
   },
   "dependencies": {
