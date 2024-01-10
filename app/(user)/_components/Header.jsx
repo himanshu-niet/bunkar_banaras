@@ -167,11 +167,11 @@ const Header = () => {
           </li>
           <li>
             <div className="right-top-bar flex-w h-full">
-              <Link href="/faqs" className="flex-c-m p-lr-10 trans-04">
-                Help &amp; FAQs
+              <Link href="/order" className="flex-c-m p-lr-10 trans-04">
+                Order
               </Link>
               <Link href="/admin-login" className="flex-c-m p-lr-10 trans-04">
-                My Account
+                Admin
               </Link>
 
             </div>
