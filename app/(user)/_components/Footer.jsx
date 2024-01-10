@@ -144,7 +144,7 @@ const Footer = () => {
 
     <div className="h-24 fixed bottom-0 left-8  z-10">
   <div className="  pointer">
- <a href={""} className='flex'> <h4 className=' font-medium mtext-102  bg-white py-1 px-2 h-8 shadow-lg mt-3 mr-1 rounded text-[#202020]' >Chat with us</h4>
+ <a href={"https://api.whatsapp.com/send/?phone=9984858991&text=Welcome%20To%20Bunkar%20Banaras"} className='flex'> <h4 className=' font-medium mtext-102  bg-white py-1 px-2 h-8 shadow-lg mt-3 mr-1 rounded text-[#202020]' >Chat with us</h4>
  <img className='h-14 w-14' src='/whatsapp.png'/></a>
   </div>
 </div>

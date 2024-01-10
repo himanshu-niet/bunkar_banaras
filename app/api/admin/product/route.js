@@ -1,6 +1,7 @@
 import prisma from "@/lib/prisma";
 import { NextResponse } from "next/server";
 const cloudinary = require("cloudinary");
+export const dynamic='force-dynamic'
 
 cloudinary.config({ 
     cloud_name: process.env.CLOUDINARY_NAME, 

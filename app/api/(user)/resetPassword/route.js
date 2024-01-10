@@ -1,6 +1,7 @@
 import prisma from "@/lib/prisma";
 import { resetLinkToken } from "@/utils/jwt";
 import transporter from "@/utils/sendMail";
+export const dynamic='force-dynamic'
 
 import { NextResponse } from "next/server";
 

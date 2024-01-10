@@ -3,6 +3,7 @@ import prisma from '@/lib/prisma';
 import jwt from '@/utils/jwt';
 import { NextResponse } from 'next/server';
 const bcrypt = require('bcryptjs');
+export const dynamic='force-dynamic'
 
 export async function POST(request) {
 

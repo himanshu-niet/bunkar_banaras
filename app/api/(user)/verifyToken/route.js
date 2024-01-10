@@ -1,4 +1,5 @@
 import { verifyresetLinkToken } from "@/utils/jwt";
+export const dynamic='force-dynamic'
 
 import { NextResponse } from "next/server";
 

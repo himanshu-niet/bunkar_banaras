@@ -1,5 +1,7 @@
 import { verifyresetLinkToken } from "@/utils/jwt";
 const bcrypt = require('bcryptjs');
+export const dynamic='force-dynamic'
+
 
 import { NextResponse } from "next/server";
 
