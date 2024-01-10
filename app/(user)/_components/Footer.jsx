@@ -71,7 +71,7 @@ const Footer = () => {
              <Link href="https://www.facebook.com/banarasisilksarees1?mibextid=LQQJ4d" className="fs-18 cl0 hov-cl1 trans-04 m-r-16">
                 <i className="fa fa-facebook" />
              </Link>
-             <Link href="https://www.instagram.com/anambanarasi/?igshid=OGQ5ZDc2ODk2ZA%3D%3D" className="fs-18 cl0 hov-cl1 trans-04 m-r-16">
+             <Link href="https://www.instagram.com/bunkarbanaras01/" className="fs-18 cl0 hov-cl1 trans-04 m-r-16">
                 <i className="fa fa-instagram" />
              </Link>
              <Link href="#" className="fs-18 cl0 hov-cl1 trans-04 m-r-16">
@@ -142,7 +142,7 @@ const Footer = () => {
 
     <BackToTop/>
 
-    <div className="h-32 fixed bottom-16 right-8  z-10">
+    <div className="h-24 fixed bottom-0 left-8  z-10">
   <div className="  pointer">
  <a href={""} className='flex'> <h4 className=' font-medium mtext-102  bg-white py-1 px-2 h-8 shadow-lg mt-3 mr-1 rounded text-[#202020]' >Chat with us</h4>
  <img className='h-14 w-14' src='/whatsapp.png'/></a>

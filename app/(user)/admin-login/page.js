@@ -1,11 +1,12 @@
 "use client"
+import {getCookie, setCookie} from '@/utils/cookie';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 
 const page = () => {
 
   useEffect(()=>{
-    if(localStorage.getItem('admin')){
+    if(getCookie('admin')){
       location.href="/admin/products"
     }
   },[])
@@ -18,7 +19,7 @@ const handdleSubmit=()=>{
 
   axios.post("api/admin/signin",{email,password}).then((res)=>{
    if( res.data.success){
-    localStorage.setItem("admin", JSON.stringify(res.data.data));
+    setCookie("admin", JSON.stringify(res.data.data));
     location.href="/admin/products"
    }
    else{

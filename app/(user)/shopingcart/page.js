@@ -6,12 +6,13 @@ import React, { useEffect, useState } from 'react'
 import Tr from '../_components/Tr';
 import { calculateTotalCost } from '@/utils/fetuers';
 import Link from 'next/link';
+import { getCookie } from '@/utils/cookie';
 const page = () => {
 
   const [userId,setUserId]=useState();
 
   useEffect(()=>{
-setUserId(JSON.parse(localStorage.getItem("user")));
+setUserId(JSON.parse(getCookie("user")));
   },[])
 
   const cartItems = useCartStore(state => state.cartItems);
@@ -39,7 +40,7 @@ setUserId(JSON.parse(localStorage.getItem("user")));
       let products= cartItems.map((cartItem) => ({
         productId: cartItem.id,
         quantity: cartItem.quantity,
-        total: (cartItem.discountPrice).toFixed(2),
+        total: (cartItem.discountPrice*cartItem.quantity).toFixed(2),
         title:cartItem.title,
         desc:cartItem.desc,
         price:cartItem.price,

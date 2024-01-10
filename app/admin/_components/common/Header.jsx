@@ -1,4 +1,5 @@
 "use client"
+import { deleteCookie } from '@/utils/cookie'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 
@@ -10,6 +11,7 @@ const navigation = [
   { name: 'Order Pending', href: '/admin', current: false },
   { name: 'Order Ongoing', href: '/admin/ongoingOrder', current: false },
   { name: 'Order History', href: '/admin/orderHistory', current: false },
+  { name: 'All Order', href: '/admin/orders', current: false },
   { name: 'Products List', href: '/admin/products', current: false },
 
 ]
@@ -20,14 +22,14 @@ function classNames(...classes) {
 
 export default function Example() {
   const handleSignOut = ()=>{
-    localStorage.removeItem("admin");
+    deleteCookie("admin");
     location.href = "/";
   }
   return (
-    <Disclosure as="nav" className="bg-gray-800  p-0 m-0">
+    <Disclosure as="nav" className="bg-white  p-0 m-0">
       {({ open }) => (
         <>
-          <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8 border-b-2 border-[#3C0504]">
             <div className="relative flex h-16 items-center justify-between">
               <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
                 {/* Mobile menu button*/}
@@ -56,7 +58,7 @@ export default function Example() {
                         key={item.name}
                         href={item.href}
                         className={classNames(
-                          item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
+                          item.current ? 'bg-[#3C0504] text-white' : 'text-[#3C0504] hover:bg-[#3C0504] hover:text-white',
                           'rounded-md px-3 py-2 text-sm font-medium'
                         )}
                         aria-current={item.current ? 'page' : undefined}
@@ -71,7 +73,7 @@ export default function Example() {
                 <button
                 onClick={()=>{handleSignOut()}}
                   type="button"
-                  className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+                  className="relative rounded-full bg-[#3C0504] p-1 text-white hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
                 >
                   <span className="absolute -inset-1.5" />
                   <span className="sr-only">Logout</span>

@@ -8,6 +8,9 @@ export async function GET(request){
             where:{
                 shippingStatus:"DELIVERED"
             },
+            orderBy: {
+                createdAt: 'desc',
+              }, 
             include: {
               address:true,
               returnInfo:true,

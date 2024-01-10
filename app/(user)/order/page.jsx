@@ -3,12 +3,13 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import OrderDetail from "../_components/OrderDetail";
+import { getCookie } from "@/utils/cookie";
 
 export default function page() {
 
   useEffect(() => {
 
-   const userId=JSON.parse(localStorage.getItem("user")); 
+   const userId=JSON.parse(getCookie("user")); 
 
    if(!userId){
     location.href="/login"

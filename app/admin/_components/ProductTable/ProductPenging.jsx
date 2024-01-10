@@ -1,6 +1,6 @@
 
 "use client"
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Table,
   TableHeader,
@@ -45,8 +45,17 @@ const columns = [
 
 const INITIAL_VISIBLE_COLUMNS = [ "id","createdAt", "total", "address","userId","orderItem","proceed","shippingStatus"];
 
-export default function ProductTable({users}) {
+export default function ProductTable() {
 
+  useEffect(() => {
+    getApi()
+  }, [])
+  const [users, setData] = useState([]);
+  const getApi = async () => {
+    axios.get("/api/admin/product/pending").then((res) => {
+      setData(res.data.data)
+    })
+  }
 
   const haddleClick=(id)=>{
     axios.put(`/api/admin/product/update?id=${id}`, {
@@ -55,9 +64,7 @@ export default function ProductTable({users}) {
         .then(function (response) {
          console.log(response)
           alert("Order Update Succesfully")
-           location.href = "/admin/ongoingOrder";
-
-
+         location.href = "/admin/ongoingOrder";
         })
         .catch(function (error) {
           console.log(error)

@@ -42,14 +42,14 @@ const columns = [
 
 const INITIAL_VISIBLE_COLUMNS = [ "id","createdAt", "total", "address","userId","orderItem","shippingStatus"];
 
-export default function ProductHistory() {
+export default function AllOrder() {
 
   useEffect(() => {
     getApi()
   }, [])
   const [users, setData] = useState([]);
   const getApi = async () => {
-    axios.get("/api/admin/product/history").then((res) => {
+    axios.get("/api/admin/order").then((res) => {
       setData(res.data.data)
     })
   }
@@ -201,7 +201,7 @@ export default function ProductHistory() {
         </div>
         <div className="flex justify-between items-center">
           <span className="text-default-400 text-small">Total {users.length} Order</span>
-          <span className="text-default-800 text-large">Order History List</span>
+          <span className="text-default-800 text-large">All Order List</span>
          
           <label className="flex items-center text-default-400 text-small">
             Rows per page:

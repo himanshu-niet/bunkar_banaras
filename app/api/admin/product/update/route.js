@@ -21,7 +21,7 @@ export async function PUT(request){
                 status: 400,
             });
         }
-    console.log(shippingStatus)
+    
           const updateProduct = await prisma.order.update({
             where: {
               id

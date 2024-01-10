@@ -1,6 +1,6 @@
 
 "use client"
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Table,
   TableHeader,
@@ -42,8 +42,20 @@ const columns = [
 
 const INITIAL_VISIBLE_COLUMNS = [ "id","createdAt", "total", "address","userId","orderItem","proceed","shippingStatus"];
 
-export default function ProductOngoing({users}) {
+export default function ProductOngoing() {
 
+
+  useEffect(()=>{
+    getApi()
+      },[])
+    
+      const [users,setData]=useState([]);
+    
+      const getApi=async ()=>{
+        axios.get("/api/admin/product/ongoing").then((res)=>{
+          setData(res.data.data)
+        })
+      }
 
   const haddleClick=(id)=>{
     axios.put(`/api/admin/product/update?id=${id}`, {

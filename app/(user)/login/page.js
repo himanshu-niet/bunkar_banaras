@@ -1,4 +1,5 @@
 "use client"
+import {setCookie,  getCookie } from '@/utils/cookie';
 import axios from 'axios';
 import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
@@ -6,7 +7,7 @@ import React, { useEffect, useState } from 'react'
 const page = () => {
 
   useEffect(()=>{
-    if(localStorage.getItem('user')){
+    if(getCookie('user')){
       location.href="/order"
     }
   },[])
@@ -19,7 +20,7 @@ const handdleSubmit=()=>{
   axios.post("api/signin",{email,password}).then((res)=>{
     console.log(res)
    if( res.data.success){
-    localStorage.setItem("user", JSON.stringify(res.data.data.id));
+    setCookie("user",JSON.stringify(res.data.data.id))
     location.href="/shopingcart"
    }
    else{
@@ -155,6 +156,16 @@ const handdleSubmit=()=>{
 
             >
               Sign up
+            </Link>
+          </p>
+          <p className="text-sm font-light text-gray-500 dark:text-gray-400">
+            {" "}
+            <Link
+              href="/resetPassword"
+              className="font-medium text-primary-600 hover:underline dark:text-primary-500"
+
+            >
+            Forgot Password?
             </Link>
           </p>
         </div>

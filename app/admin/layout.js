@@ -1,13 +1,14 @@
 "use client"
 import { useEffect } from "react";
 import Header from "./_components/common/Header";
+import { getCookie } from "@/utils/cookie";
 export default function Layout({ children }) {
 
 
 
 
   useEffect(()=>{
-  const check=localStorage.getItem("admin");
+  const check=getCookie("admin");
 
     if(!check){
       location.href="/admin-login"

@@ -2,13 +2,13 @@ import prisma from "@/lib/prisma";
 import { NextResponse } from "next/server";
 
 
-
-
-
     export async function GET(request){
       try {
           const order = await prisma.order.findMany({
-              include: {
+            orderBy: {
+              createdAt: 'desc',
+            },  
+            include: {
                 address:true,
                 returnInfo:true,
                 orderItem:true

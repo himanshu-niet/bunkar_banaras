@@ -1,5 +1,5 @@
 "use client"
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Table,
   TableHeader,
@@ -31,9 +31,19 @@ import axios from "axios";
 
 const INITIAL_VISIBLE_COLUMNS = ["title", "price", "stock", "actions"];
 
-export default function ProductTable({users}) {
+export default function ProductTable() {
 
-
+  useEffect(()=>{
+    getApi()
+      },[])
+      
+      const [users,setData]=useState([]);
+      
+      const getApi=async ()=>{
+        axios.get("/api/admin/product").then((res)=>{
+          setData(res.data.data)
+        })
+      }
   const deleteProduct=(id)=>{
     axios.delete(`/api/admin/product?id=${id}`).then((res)=>{
       console.log(res)

@@ -75,9 +75,13 @@ try{
           const userId = url.searchParams.get('id');
     
           const order = await prisma.order.findMany({
+            
               where: {
                 userId: userId,
               },
+              orderBy: {
+                createdAt: 'desc',
+              }, 
               include: {
                 address:true,
                 returnInfo:true,

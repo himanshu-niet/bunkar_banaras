@@ -28,6 +28,7 @@ import ShowProducts from "@/app/admin/_components/ProductTable/ShowProducts";
 import ShowUser from "@/app/admin/_components/ProductTable/ShowUser";
 import axios from "axios";
 import { PlusIcon } from "@/app/admin/_components/common/PlusIcon";
+import { deleteCookie } from "@/utils/cookie";
 
 
 const columns = [
@@ -46,7 +47,7 @@ export default function OrderDetail({users}) {
 
 
   const handleSignOut = ()=>{
-    localStorage.removeItem("user");
+    deleteCookie("user");
     location.href = "/";
   }
   const [filterValue, setFilterValue] = React.useState("");

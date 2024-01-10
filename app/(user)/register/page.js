@@ -1,4 +1,5 @@
 "use client"
+import { getCookie } from '@/utils/cookie';
 import axios from 'axios';
 import { useFormik } from 'formik';
 import Link from 'next/link'
@@ -7,7 +8,7 @@ import React, { useEffect } from 'react'
 const page = () => {
   
   useEffect(()=>{
-    if(localStorage.getItem('user')){
+    if(getCookie('user')){
       location.href="/order"
     }
   },[])
