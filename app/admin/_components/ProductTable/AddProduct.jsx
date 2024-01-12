@@ -127,7 +127,7 @@ console.log(response)
                               name="avatar"
                               onChange={registerDataChange}
                               type="file" 
-                              multiple
+                              multiple="true"
                               required
                               />
                           </div>

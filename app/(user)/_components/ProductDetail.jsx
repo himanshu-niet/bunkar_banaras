@@ -4,6 +4,7 @@ import { getOfferPrice } from '@/utils/fetuers'
 import useCartStore from '@/utils/store/cart'
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
+import ProductImage from './ProductImage'
 
 
 const ProductDetail = ({ id }) => {
@@ -18,7 +19,6 @@ const ProductDetail = ({ id }) => {
     axios.get(`/api/product?id=${id}`).then((res) => {
       console.log(res.data.data)
       setData(res.data.data)
-
     })
   }
 
@@ -70,8 +70,8 @@ const ProductDetail = ({ id }) => {
       <section className="sec-product-detail bg0 p-t-65 p-b-60">
         <div className="container">
           <div className="row">
-            <div className="col-md-6  p-b-30">
-              <img src={data?.images[0].url} alt="IMG-PRODUCT" />
+            <div className="col-md-6  p-b-30 ">
+              <ProductImage images={data?.images}/>
             </div>
             <div className="col-md-6  p-b-30 px-5 md:px-0 ">
               <div className=" p-t-5 p-lr-0-lg">

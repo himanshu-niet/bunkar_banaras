@@ -1,6 +1,6 @@
 function setCookie(cookieName, cookieValue) {
     const expirationDate = new Date();
-    expirationDate.setTime(expirationDate.getTime() + 30 * 60 * 1000); // 30 minutes in milliseconds
+    expirationDate.setTime(expirationDate.getTime() + 1440 * 60 * 1000); // 24 minutes in milliseconds
     const cookieString = `${encodeURIComponent(cookieName)}=${encodeURIComponent(cookieValue)};expires=${expirationDate.toUTCString()};path=/`;
     document.cookie = cookieString;
   }

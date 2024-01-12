@@ -29,14 +29,13 @@ import axios from "axios";
 
 
 
-const INITIAL_VISIBLE_COLUMNS = ["title", "price", "stock", "actions"];
+const INITIAL_VISIBLE_COLUMNS = ["title", "price","discount","color", "stock", "actions"];
 
 export default function ProductTable() {
 
   useEffect(()=>{
     getApi()
       },[])
-      
       const [users,setData]=useState([]);
       
       const getApi=async ()=>{
@@ -126,19 +125,11 @@ export default function ProductTable() {
       case "actions":
         return (
           <div className="relative flex justify-end items-center gap-2">
-            <Dropdown>
-              <DropdownTrigger>
-                <Button isIconOnly size="sm" variant="light">
-                  <VerticalDotsIcon className="text-default-300" />
-                </Button>
-              </DropdownTrigger>
-              <DropdownMenu>
-                <DropdownItem><Link href={"/productdetail/"+user.id}>View</Link></DropdownItem>
-                <DropdownItem><Link href={"/admin/update/"+user.id}>Edit</Link></DropdownItem>
+          <Link className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2" href={"/productdetail/"+user.id}>View</Link>
+          <Link className="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2" href={"/admin/update/"+user.id}>Edit</Link>
+          <button className="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2" onClick={()=>deleteProduct(user.id)}>Delete</button>
 
-                <DropdownItem onClick={()=>deleteProduct(user.id)}>Delete</DropdownItem>
-              </DropdownMenu>
-            </Dropdown>
+           
           </div>
         );
       default:
@@ -248,11 +239,7 @@ export default function ProductTable() {
   const bottomContent = React.useMemo(() => {
     return (
       <div className="py-2 px-2 flex justify-between items-center">
-        <span className="w-[30%] text-small text-default-400">
-          {selectedKeys === "all"
-            ? "All items selected"
-            : `${selectedKeys.size} of ${filteredItems.length} selected`}
-        </span>
+       
         <Pagination
           isCompact
           showControls
@@ -283,8 +270,6 @@ export default function ProductTable() {
       classNames={{
         wrapper: "max-h-[382px]",
       }}
-      selectedKeys={selectedKeys}
-      selectionMode="multiple"
       sortDescriptor={sortDescriptor}
       topContent={topContent}
       topContentPlacement="outside"
