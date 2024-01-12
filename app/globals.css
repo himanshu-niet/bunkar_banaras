@@ -15,58 +15,56 @@ color: #921709;
 
  
   
-  .swiper-slide {
+ .product .swiper-slide {
     text-align: center;
     font-size: 18px;
     background: #fff;
-  
-    /* Center slide text vertically */
+
     display: flex;
     justify-content: center;
-    align-items: center;
+    
   }
   
-  .swiper-slide img {
+  .product .swiper-slide img {
     display: block;
-    
-    object-fit: cover;
+    max-height: 500px;
   }
   
 
-  .swiper {
+  .product .swiper {
     width: 100%;
     height: 300px;
     margin-left: auto;
     margin-right: auto;
   }
   
-  .swiper-slide {
+  .product .swiper-slide {
     background-size: cover;
     background-position: center;
   }
   
-  .mySwiper2 {
+  .product .mySwiper2 {
     height: 80%;
     width: 100%;
   }
   
-  .mySwiper {
+  .product .mySwiper {
     height: 20%;
     box-sizing: border-box;
     padding: 10px 0;
   }
   
-  .mySwiper .swiper-slide {
+  .product .mySwiper .swiper-slide {
     width: 25%;
     height: 100%;
     opacity: 0.4;
   }
   
-  .mySwiper .swiper-slide-thumb-active {
+  .product .mySwiper .swiper-slide-thumb-active {
     opacity: 1;
   }
   
-  .swiper-slide img {
+  .product  .swiper-slide img {
     display: block;
    
     object-fit: cover;

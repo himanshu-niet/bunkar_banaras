@@ -168,7 +168,7 @@ const Header = () => {
           <li>
             <div className="right-top-bar flex-w h-full">
               <Link href="/order" className="flex-c-m p-lr-10 trans-04">
-                Order
+                My Account
               </Link>
               <Link href="/admin-login" className="flex-c-m p-lr-10 trans-04">
                 Admin

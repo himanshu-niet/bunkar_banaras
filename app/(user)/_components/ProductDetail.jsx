@@ -70,7 +70,7 @@ const ProductDetail = ({ id }) => {
       <section className="sec-product-detail bg0 p-t-65 p-b-60">
         <div className="container">
           <div className="row">
-            <div className="col-md-6  p-b-30 ">
+            <div className="col-md-6  p-b-30 product">
               <ProductImage images={data?.images}/>
             </div>
             <div className="col-md-6  p-b-30 px-5 md:px-0 ">

@@ -2,6 +2,7 @@
 import { deleteCookie } from '@/utils/cookie'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
+import Link from 'next/link'
 
 
 
@@ -45,11 +46,11 @@ export default function Example() {
               </div>
               <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
                 <div className="flex flex-shrink-0 items-center">
-                  <img
-                    className="h-8 w-auto"
-                    src="/logo.png"
-                    alt="Bunkar Banaras"
-                  />
+                  <Link href={"/"}><img
+                  className="h-8 w-auto"
+                  src="/logo.png"
+                  alt="Bunkar Banaras"
+                /></Link>
                 </div>
                 <div className="hidden sm:ml-6 sm:block">
                   <div className="flex space-x-4">
