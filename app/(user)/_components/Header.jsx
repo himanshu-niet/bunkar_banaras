@@ -162,7 +162,7 @@ const Header = () => {
         <ul className="topbar-mobile">
           <li>
             <div className="left-top-bar">
-              Free shipping for standard order over $100
+            Free National shipping for standard order over ₹10000
             </div>
           </li>
           <li>
