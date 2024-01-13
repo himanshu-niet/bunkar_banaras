@@ -1,6 +1,23 @@
 import React from 'react'
 
 const page = () => {
+
+
+
+
+ const send=async()=>{
+  let mailOptions = {
+    from: '"Bunkar Banaras" <16himanshu16yadav@gmail.com>', // sender address
+    to: user.email, // list of receivers
+    subject: 'Bunkar Banaras Password Reset Link', // Subject line
+    text: resetLink, // plain text body
+    html:htmlcontent// html body
+  };
+
+await transporter.sendMail(mailOptions);
+
+ }
+
   return (
     <>
   {/* Title page */}

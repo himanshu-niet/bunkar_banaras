@@ -4,6 +4,7 @@ import ProductOperation from '../_components/Products/ProductOperation'
 import Link from 'next/link'
 import axios from 'axios'
 import { useSearchParams } from 'next/navigation'
+import { getOfferPrice } from '@/utils/fetuers'
 
 const page = () => {
   const searchParams = useSearchParams()
@@ -76,7 +77,8 @@ const page = () => {
               >
                 {item.title}
               </a>
-              <span className="stext-105 cl3">Rs. {item.price}</span>
+              {item.discount > 0 ? <span className="stext-105 cl2"><del className='mr-2 text-gray-500'>Rs.{item.price}</del>Rs.{getOfferPrice(item.price, item.discount)}</span>
+                    : <span className="stext-105 cl2">Rs.{getOfferPrice(item.price, item.discount)}</span>}
             </div>
            
           </div>

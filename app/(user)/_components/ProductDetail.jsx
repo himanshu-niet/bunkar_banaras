@@ -44,6 +44,12 @@ const ProductDetail = ({ id }) => {
     addItemToCart(product);
     alert("Added to cart");
   };
+  const onBuyNow = (product) => {
+    product.quantity=quantity || 1;
+    product.discountPrice=getOfferPrice(product.price,product.discount) || product.price
+    addItemToCart(product);
+    location.href="/shopingcart";
+  };
 
 
   if (!data) return <h1>Loding.....</h1>
@@ -165,6 +171,7 @@ const ProductDetail = ({ id }) => {
                     <div>
                       <button
                         type="button"
+                        onClick={()=>onBuyNow(data)}
                         className="py-3 px-4 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-gray-800 text-white hover:bg-gray-900  disabled:pointer-events-none"
                       >
                         Buy Now
@@ -271,7 +278,7 @@ const ProductDetail = ({ id }) => {
                   <summary className='mtext-102 cl2 pointer'>Silk Mark Certification</summary>
                   <p className='stext-102 '>
                   Our exquisite Banarasi sarees are adorned with the esteemed Silk Mark certification, a symbol of authenticity and superior quality in silk craftsmanship. This prestigious certification guarantees the pure and genuine nature of the silk used in our sarees. By choosing our Banarasi sarees, customers can have complete confidence in the origin and purity of the silk, appreciating the intricate craftsmanship that goes into each creation. Our unwavering commitment to excellence is exemplified by the Silk Mark certification, a testament to our dedication to offering customers genuine and top-notch silk products of the highest calibre.
-                 <br/> <a href='https://www.instagram.com/p/CyaoiMbP-8H/' target='_blank'>View certificate here.</a>
+                 <br/> <a href='https://drive.google.com/file/d/1wKw-jbaORqyweeIn1SYilSUfAhq8MA-i/view?usp=sharing' target='_blank'>View certificate here.</a>
                   </p>
               </details>
               <hr/>

@@ -78,9 +78,7 @@ const Footer = () => {
                 <i className="fa fa-pinterest-p" />
                 <i className="fa-brands fa-x-twitter"></i>
              </Link>
-             <Link href="https://www.google.com/maps?q=Anam+Banarasi+Silk+House,+Walidpur+Market+Rd,+Mau,+Mohinuddinpur,+Uttar+Pradesh+276405&ftid=0x399190884991bea1:0x92f1e789ce800a14&hl=en-IN&gl=in&entry=gps&lucs=,47071704,47069508&g_ep=CAISDDYuODYuMS4xNTU2MBgAINeCAyoSLDQ3MDcxNzA0LDQ3MDY5NTA4QgJJTg%3D%3D&g_st=iw" className="fs-18 cl0 hov-cl1 trans-04 m-r-16">
-                <i className="fa fa-map-marker" />
-             </Link>
+            
             </div>
           </div>
           <div className="col-sm-6 col-lg-3 p-b-50">
@@ -144,7 +142,7 @@ const Footer = () => {
 
     <div className="h-24 fixed bottom-0 left-8  z-10">
   <div className="pointer flex">
- <a href={"https://api.whatsapp.com/send/?phone=9838786320&text=Welcome%20To%20Bunkar%20Banaras"} className='flex'> 
+ <a href={"https://api.whatsapp.com/send/?phone=9838786320&text=Hello Customer Support Team, %0aI have a question and could use some assistance."} className='flex'> 
  <img className='h-14 w-14 mr-2' src='/whatsapp.png'/>
  
  <h4 className=' font-medium mtext-102  bg-white py-1 px-2 h-8 shadow-lg mt-[10px] mr-1 rounded text-[#202020]' >Chat with us</h4>
